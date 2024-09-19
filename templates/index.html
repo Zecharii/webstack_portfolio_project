@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>GitHub Stats</title>
+</head>
+<body>
+    <!-- <header>
+    </header> -->
+    <main>
+        <div class="container">
+            <h1>GitHub Stats</h1>
+            <p>Unlock User Insights from GitHub Data</p>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul>
+                        {% for category, message in messages %}
+                        <li class="flash-message {{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <form action="/analytics" method="post">
+                <div class="input-container">
+                    <input type="text" id="username" name="username" placeholder="Enter GitHub Username" required>
+                </div>
+                <button type="submit">Analyze</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Stats for {{ username }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='analytics.css') }}">
+</head>
+<body>
+    <header>
+        <p><a href="{{ url_for('index') }}">Back to Home</a></p>
+    </header>
+    <h1>GitHub Stats for <a href="https://github.com/{{ username }}" target="_blank">{{ username }}</a></h1>
+
+    <div class="container">
+        <div class="user-details">
+            <h2>User Details</h2>
+            <img src="{{ avatar_url }}" alt="{{ username }}'s avatar">
+            <p>Name: <b>{{ name }}</b></p>
+            <p>Bio: {{ bio }}</p>
+            <p>Location: {{ location }}</p>
+            <p>Followers: {{ followers }}</p>
+            <p>Following: {{ following }}</p>
+            <p>Public Repos: {{ public_repos }}</p>
+        </div>
+        
+        {% if pie_chart_url %}
+        <div class="languages-repo">
+            <h2>Languages by Repo Count</h2>
+            <img src="data:image/png;base64,{{ donut_chart_url }}" alt="Languages Donut Chart">
+            <h2>Issues by Repo Count</h2>
+            <img src="data:image/png;base64,{{ issues_heatmap_url }}" alt="Issues Heatmap">
+        </div>
+        {% endif %}
+
+        {% if commits_heatmap_url %}
+        <div class="commits-repo">
+            <h2>Commits by Repo Count</h2>
+            <img src="data:image/png;base64,{{ commits_heatmap_url }}" alt="Commits Heatmap">
+        </div>
+        {% endif %}
+        
+        <div class="repositories">
+            <h2>Repositories</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Repo Name</th>
+                        <th>Commits Count</th>
+                        <th>Issues Count</th>
+                        <th>Languages</th>
+                        <th>Stars</th>
+                        <th>Watchers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for repo in repos %}
+                    <tr>
+                        <td>{{ repo.repo_name }}</td>
+                        <td>{{ repo.commit_count }}</td>
+                        <td>{{ repo.issues_count }}</td>
+                        <td>{{ repo.languages }}</td>
+                        <td>{{ repo.stars }}</td>
+                        <td>{{ repo.watchers }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
